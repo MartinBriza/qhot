@@ -94,7 +94,6 @@ void CommandLineParser::_parseQHotProfile(const QString& profilePath)
     QString profileFileName = QStringLiteral("qhot-profile.json");
     if (fInfo.fileName() != profileFileName) {
         qWarning() << "Wrong profile:" << fInfo.fileName() << "it should be:" << profileFileName;
-        return;
     }
 
     QFile file{profilePath};
