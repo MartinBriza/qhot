@@ -101,8 +101,12 @@ ApplicationWindow {
     Connections {
         target: ProvidesSomething
         function onFilePathChanged() {
+            loader.setSource("")
+            ProvidesSomething.resetEngine()
+        }
+        function onResetDone() {
             var path = ProvidesSomething.filePath + "?t=" + Date.now()
-            loader.source = path
+            loader.setSource(path)
         }
     }
 

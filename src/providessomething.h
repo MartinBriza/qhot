@@ -72,9 +72,13 @@ public:
         }
     }
 
+public slots:
+    void resetEngine();
+
 signals:
     void filePathChanged();
     void backgroundChanged();
+    void resetDone();
 
 private:
     Q_DISABLE_COPY(ProvidesSomething);

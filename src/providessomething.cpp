@@ -4,6 +4,7 @@
 #include <QDirIterator>
 #include <QJSEngine>
 #include <QQmlEngine>
+#include <QCoreApplication>
 
 ProvidesSomething::ProvidesSomething()
 {
@@ -13,9 +14,19 @@ ProvidesSomething::ProvidesSomething()
 
     connect(&_fileSystemWatcher, &QFileSystemWatcher::fileChanged, this, [this](const QString& path){
         Q_UNUSED(path)
-        m_engine->clearComponentCache();
         emit filePathChanged();
     });
+}
+
+void ProvidesSomething::resetEngine()
+{
+    m_engine->collectGarbage();
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QCoreApplication::processEvents();
+    m_engine->clearComponentCache();
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QCoreApplication::processEvents();
+    emit resetDone();
 }
 
 void ProvidesSomething::setEngine(QQmlEngine* engine)
